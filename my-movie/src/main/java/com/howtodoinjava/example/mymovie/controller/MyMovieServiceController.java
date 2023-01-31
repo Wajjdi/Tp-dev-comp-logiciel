@@ -1,8 +1,8 @@
 package com.howtodoinjava.example.mymovie.controller;
 
 import com.howtodoinjava.example.mymovie.beans.Acteur;
-import com.howtodoinjava.example.mymovie.beans.Employee;
 import com.howtodoinjava.example.mymovie.beans.Film;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Api(value = "Swagger2DemoRestController", description = "REST Apis related to Student Entity!!!!")
 @RestController
 public class MyMovieServiceController {
 ;protected static final SimpleDateFormat dateFormat =
@@ -75,18 +76,31 @@ public class MyMovieServiceController {
         return acteurs.stream().filter(x -> x.getNom().equalsIgnoreCase(name)).collect(Collectors.toList()).get(0);
     }
 
-    @RequestMapping(value = "/getActeurFilm/{film}",method = RequestMethod.GET)
-    public List<Acteur> getActeurFilm(@PathVariable(value = "film") String film) {
+    @RequestMapping(value = "/getActeurFilm/{titre}",method = RequestMethod.GET)
+    public List<Acteur> getActeurFilm(@PathVariable(value = "titre") String titre) {
        List<Acteur> acteurList = new ArrayList<Acteur>();
-        for (Acteur acteur : acteurs) {
-           for (Film filma:acteur.getFilm()){
-               if(filma.getTitre().equals(film)){
-                   acteurList.add(acteur);
-               }
-           }
+        for (Film film:films) {
+            if (film.getTitre().equals(titre)){
+                acteurList.add(film.getAct_principal());
+            }
         }
-        System.out.println("Getting acteur details for " + acteurList);
         return acteurList;
+    }
+
+
+    @RequestMapping(value = "/getFilm",method = RequestMethod.GET)
+    public List<Film> getFilm() {
+        return films;
+    }
+
+    @RequestMapping(value = "/getFilmTitre/{titre}",method = RequestMethod.GET)
+    public Film getFilmTitre(@PathVariable(value = "titre") String titre) {
+        return films.stream().filter(x -> x.getTitre().equalsIgnoreCase(titre)).collect(Collectors.toList()).get(0);
+    }
+
+    @RequestMapping(value = "/getFilmDate/{date}",method = RequestMethod.GET)
+    public Film getFilmDate(@PathVariable(value = "date") String date) {
+        return films.stream().filter(x -> x.getTitre().equalsIgnoreCase(date)).collect(Collectors.toList()).get(0);
     }
 
 }

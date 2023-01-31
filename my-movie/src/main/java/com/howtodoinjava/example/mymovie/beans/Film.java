@@ -1,12 +1,18 @@
 package com.howtodoinjava.example.mymovie.beans;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 public class Film {
-String titre;
-String realisateur;
-Acteur act_principal;
-String date_sortie;
+    @ApiModelProperty(notes = "titre du film",name="titre",required=true,value="test name")
+    String titre;
+    @ApiModelProperty(notes = "realisateur du film",name="realisateur",required=true,value="test name")
+    String realisateur;
+    @ApiModelProperty(notes = "acteur principal pour un film",name="act_principal",required=true,value="test name")
+    Acteur act_principal;
+    @ApiModelProperty(notes = "Lastname of the Acteur",name="date_sortie",required=true,value="test name")
+    String date_sortie;
 
 public Film(String titre, String realisateur,Acteur act_principal, String date_sortie){
     this.titre=titre;
