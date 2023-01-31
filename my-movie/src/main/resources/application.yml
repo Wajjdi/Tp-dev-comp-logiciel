@@ -15,7 +15,7 @@ eureka:
 
 spring:
   application:
-    name: employee-service
+    name: my-movie
 
 management:
   security:
