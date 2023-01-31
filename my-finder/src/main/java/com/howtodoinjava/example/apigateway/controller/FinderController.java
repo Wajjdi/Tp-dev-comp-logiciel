@@ -81,16 +81,26 @@ public class FinderController {
 
         return " titre du film "+ nom+" [ film " + response+" ]";
     }
+    @RequestMapping(value = "/FilmsDetailsDate/{nom}", method = RequestMethod.GET)
+    @HystrixCommand(fallbackMethod = "fallbackMethod")
+    public String getFilmsDate(@PathVariable String nom)
+    {
+        String response = restTemplate.exchange("http://my-movie/getFilmDate/{nom}",
+                HttpMethod.GET, null, new ParameterizedTypeReference<String>() {},nom).getBody();
 
+        System.out.println("Response Body " + response);
+
+        return " date du film "+ nom+" [ film " + response+" ]";
+    }
 
     public String  fallbackMethod(String nom){
 
-        return "Fallback response:: No acteur details available temporarily";
+        return "Fallback response:: No acteur or movie details available temporarily";
     }
 
     public String  fallbackMethod1(){
 
-        return "Fallback response:: No acteur details available temporarily";
+        return "Fallback response:: No acteur or movie details available temporarily";
     }
 
 
